@@ -1,0 +1,26 @@
+[user]
+	name = Konstantinos Bairaktaris
+	email = kbairak@transifex.com
+[alias]
+    lol = log --graph --decorate --pretty=oneline --abbrev-commit --topo-order
+[push]
+	default = simple
+[color]
+	ui = auto
+[merge]
+	tool = diffmerge
+[mergetool]
+  prompt = false
+[core]
+	editor = nvim
+[filter "lfs"]
+	clean = git lfs clean %f
+	smudge = git lfs smudge %f
+	required = true
+[mergetool "diffmerge"]
+	cmd = "diffmerge --merge --result=\"$MERGED\" \"$LOCAL\" \"$(if test -f \"$BASE\"; then echo \"$BASE\"; else echo \"$LOCAL\"; fi)\" \"$REMOTE\""
+	trustExitCode = true
+[diff]
+	tool = diffmerge
+[difftool "diffmerge"]
+	cmd = diffmerge \"$LOCAL\" \"$REMOTE\"

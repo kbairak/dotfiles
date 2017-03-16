@@ -1,0 +1,14 @@
+P=main
+OBJECTS=
+CFLAGS = -g -Wall -O3
+CPPFLAGS = -g -Wall -O3 --std=c++11
+LDLIBS=
+CC=gcc
+
+all: $(P)
+
+$(P): $(OBJECTS)
+
+clean:
+	rm -f $(OBJECTS) $(P)
+

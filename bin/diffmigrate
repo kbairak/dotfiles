@@ -1,0 +1,107 @@
+#!/usr/bin/env python
+
+"""
+    Migrate the database back a point where it's safe to either migrate to one
+    branch or another.
+
+    usage:
+        %(__main__)s [--print] [branch_a [branch_b]]
+
+    If branch_b is ommited, 'HEAD' is assumed.
+    If branch_a is ommited as well, 'devel' is assumed
+
+    If '--print' is set, the target migrations will be only printed, not
+    applied.
+"""
+
+import os
+import subprocess
+import sys
+from collections import defaultdict
+
+
+ONLY_PRINT = False
+FORWARD = False
+
+
+def get_input():
+    args = sys.argv[1:]  # omit command
+    if args and args[0] == "--print":
+        # only print migrations, don't migrate
+        global ONLY_PRINT
+        ONLY_PRINT = True
+        args = args[1:]
+
+    if args and args[0] == "--forward":
+        # migrate forwards
+        global FORWARD
+        FORWARD = True
+        args = args[1:]
+
+    try:
+        branch_b = args[1]
+    except IndexError:
+        branch_b = "HEAD"
+
+    try:
+        branch_a = args[0]
+    except IndexError:
+        branch_a = "devel"
+
+    stdout_data, stderr_data = subprocess.\
+        Popen(['git', 'diff', '--name-only', branch_a, branch_b],
+              stdout=subprocess.PIPE).\
+        communicate()
+    for line in (line
+                 for line in stdout_data.split('\n')
+                 if 'migrations' in line):
+        yield line
+
+
+def main():
+    if len(sys.argv) == 2 and sys.argv[1] == '-h':
+        print __doc__ % {'__main__': os.path.split(sys.argv[0])[1]}
+        return
+
+    apps = defaultdict(set)
+    for line in get_input():
+        line_split = line.split(os.path.sep)
+
+        app = line_split[1]
+        migration = line_split[3]
+        migration_split = migration.split('_')
+        try:
+            migration_number = int(migration_split[0])
+        except ValueError:
+            continue
+
+        apps[app].add(migration_number)
+
+    targets = []
+    for app, migrations in apps.items():
+        min_migration = min(migrations)
+        if min_migration == 1:
+            migration_to = 'zero'
+        else:
+            migration_to = ("%4s" % (min_migration - 1)).replace(' ', '0')
+        targets.append((app, migration_to))
+
+    for app, migration_to in targets:
+        print "{:20}:{}".format(app, migration_to)
+
+    if ONLY_PRINT:
+        return
+
+    if FORWARD:
+        for app, _ in targets:
+            subprocess.Popen(['python', 'manage.py', 'migrate', app]).wait()
+        return
+
+    for app, migration_to in targets:
+        subprocess.\
+            Popen(['python', 'manage.py', 'migrate', app, migration_to]).\
+            wait()
+
+
+if __name__ == "__main__":
+    main()

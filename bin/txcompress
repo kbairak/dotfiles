@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+if [ -f /tmp/txcompress_lock ]; then
+  echo "Compressor locked"
+  exit
+fi
+touch /tmp/txcompress_lock
+
+echo -n 'Collecting static... ' &&
+/Users/kbairak/devel/env/tx/bin/python\
+    /Users/kbairak/devel/repos/transifex/txc/manage.py collectstatic --noinput\
+     > /dev/null 2> /dev/null &&
+echo 'done' &&
+echo -n 'Compressing...       ' &&
+/Users/kbairak/devel/env/tx/bin/python\
+    /Users/kbairak/devel/repos/transifex/txc/manage.py compress -f\
+     > /dev/null 2> /dev/null &&
+echo 'done' &&
+
+rm /tmp/txcompress_lock
+
+say 'compressed' &

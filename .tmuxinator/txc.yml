@@ -1,0 +1,62 @@
+# ~/.tmuxinator/txc.yml
+
+name: txc
+root: ~/devel/repos/transifex/txc
+
+# Optional tmux socket
+# socket_name: foo
+
+# Runs before everything. Use it to start daemons etc.
+# pre: sudo /etc/rc.d/mysqld start
+
+# Runs in each window and pane before window/pane specific commands. Useful for setting up interpreter versions.
+# pre_window: rbenv shell 2.0.0-p247
+
+# Pass command line options to tmux. Useful for specifying a different tmux.conf.
+# tmux_options: -f ~/.tmux.mac.conf
+
+# Change the command to call tmux.  This can be used by derivatives/wrappers like byobu.
+# tmux_command: byobu
+
+# Specifies (by name or index) which window will be selected on project startup. If not set, the first window is used.
+# startup_window: logs
+
+# Controls whether the tmux session should be attached to automatically. Defaults to true.
+# attach: false
+
+# Runs after everything. Use it to attach to tmux with custom options etc.
+# post: tmux -CC attach -t txc
+post: tmux set-option status off
+
+windows:
+  - main:
+      layout: 6a70,425x93,0,0{113x93,0,0[113x23,0,0,0,113x24,0,24,3,113x44,0,49,4],311x93,114,0,5}
+      #layout: dc77,364x82,0,0{105x82,0,0[105x19,0,0,0,105x19,0,20,7,105x42,0,40,3],258x82,106,0,4}
+      panes:
+        - zsh:
+            - workon tx
+            - hh git branch
+        - runserver:
+            - workon tx
+            - hh mg runserver 0.0.0.0:8000
+        - shell:
+            - workon tx
+            - mg shell_plus
+        - nvim:
+            - nvim
+  - daemons:
+      layout: 95a3,364x82,0,0{185x82,0,0[185x41,0,0,1,185x40,0,42,5],178x82,186,0[178x41,186,0,6,178x40,186,42,8]}
+      panes:
+        - openvpn:
+            - sudo /usr/local/Cellar/openvpn/2.3.6/sbin/openvpn --config /etc/openvpn/tx-rs.ovpn
+        - live-proxy:
+            - cd ~/devel/repos/transifex/transifex-live-proxy
+            - node server.js
+        - txriver:
+            - workon hermes
+            - cd ~/devel/repos/transifex/txriver
+            - python txriver
+        - pglog:
+            - cd /usr/local/var/postgres/pg_log
+            - ls -t | head -1 | xargs tail -f
+  - glances: glances

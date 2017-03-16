@@ -1,0 +1,23 @@
+nmap j <down><down><down>
+nmap k <up><up><up>
+
+set editor='/Applications/MacVim.app/Contents/MacOS/MacVim'
+set followhints=1
+set guioptions="bCs"
+set hlfind
+set showtabline="multitab"
+set! browser.tabs.closeWindowWithLastTab=false
+
+abbreviate bb https://bitbucket.org/
+abbreviate cci https://circleci.com/gh/transifex/txc
+abbreviate dd https://docs.djangoproject.com/en/1.5/
+abbreviate gh https://github.com/
+abbreviate jira https://transifex.atlassian.net/browse/TX-
+abbreviate lo http://tx.loc:8000/
+abbreviate lp https://lastpass.com/?ac=1
+abbreviate mi https://mail.google.com/
+abbreviate sup https://transifex.zendesk.com/agent/#/tickets/
+abbreviate tn tabnext
+abbreviate trel http://translate.google.com/#auto|el|
+abbreviate tren http://translate.google.com/#auto|en|
+abbreviate tx https://www.transifex.com/

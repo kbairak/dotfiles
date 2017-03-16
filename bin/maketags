@@ -1,0 +1,60 @@
+#!/usr/bin/env bash
+
+# Paths
+TXC_PATH=~/devel/repos/transifex/txc
+DEVEL_PATH=~/devel/repos/transifex
+SITE_PACKAGES_PATH=~/devel/env/tx/lib/python2.7/site-packages
+
+# Lock
+if [ -f /tmp/maketags_lock ]; then
+  echo "Tags locked"
+  exit
+fi
+touch /tmp/maketags_lock
+
+# start with capturing txc
+echo -n 'Generating tags for txc...        '
+ctags --exclude='**/transifex/htmlcov/**' --exclude='**/site_media/**'\
+  --exclude='**/migrations/**' --exclude='*min.js' --exclude='**/*live.js'\
+  --exclude='**/*stripe.js' --exclude='**/transifex/static/plugins/**'\
+  --exclude='**/tests_js/libs/**' --exclude='**/tests_js/node_modules/**'\
+  --exclude='**/node_modules/**' -R\
+  -o /tmp/txc_tags $TXC_PATH 2> /dev/null
+cp /tmp/txc_tags $TXC_PATH/tags
+echo 'done'
+
+# append folders from devel dict
+echo -n 'Generating tags for local deps... '
+cp /tmp/txc_tags /tmp/devel_tags
+ctags --exclude='**/transifex/htmlcov/**' --exclude='**/site_media/**'\
+  --exclude='**/migrations/**' --exclude='*min.js' --exclude='**/*live.js'\
+  --exclude='**/*stripe.js' --exclude='**/transifex/static/plugins/**' -R -a\
+  -o /tmp/devel_tags $LOCAL_PATH/python_lionbridge\
+  $LOCAL_PATH/txformats 2> /dev/null
+cp /tmp/devel_tags $TXC_PATH/tags
+echo 'done'
+
+# append django
+echo -n 'Generating tags for django...     '
+cp /tmp/devel_tags /tmp/site_packages_tags
+ctags --exclude='**/transifex/htmlcov/**' --exclude='**/site_media/**'\
+  --exclude='**/migrations/**' --exclude='*min.js' --exclude='**/*live.js'\
+  --exclude='**/*stripe.js' --exclude='**/transifex/static/plugins/**' -R -a\
+  -o /tmp/site_packages_tags $SITE_PACKAGES_PATH/django\
+  $SITE_PACKAGES_PATH/events 2> /dev/null
+cp /tmp/site_packages_tags $TXC_PATH/tags
+echo 'done'
+
+# append all site packages
+#echo -n 'Generating tags for all site packages... '
+#cp /tmp/txc_tags /tmp/txc_site_packages_tags
+#ctags --exclude='**/transifex/htmlcov/**' --exclude='**/site_media/**'\
+#  --exclude='**/migrations/**' --exclude='*min.js' --exclude='**/*live.js'\
+#  --exclude='**/*stripe.js' --exclude='**/transifex/static/plugins/**' -R -a\
+#  -o /tmp/txc_site_packages_tags $SITE_PACKAGES_PATH 2> /dev/null
+#cp /tmp/txc_site_packages_tags $TXC_PATH/tags
+#echo 'done'
+
+rm /tmp/txc_tags /tmp/devel_tags /tmp/site_packages_tags /tmp/maketags_lock
+
+say "tags made" &

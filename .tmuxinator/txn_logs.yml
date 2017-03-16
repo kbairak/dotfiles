@@ -1,0 +1,26 @@
+# ~/.tmuxinator/txn_logs.yml
+
+name: txn_logs
+root: ~/devel/repos/transifex/txn
+
+post: tmux set-option status off
+
+windows:
+  - django logs:
+      layout: even-horizontal
+      panes:
+        - txn001:
+            - ssh txn001.transifex.production "tail -f /home/transifex/django/txn/django_app/txn/logs/transifex.log"
+        - txn002:
+            - ssh txn002.transifex.production "tail -f /home/transifex/django/txn/django_app/txn/logs/transifex.log"
+        - txn003:
+            - ssh txn003.transifex.production "tail -f /home/transifex/django/txn/django_app/txn/logs/transifex.log"
+  - var log:
+      layout: even-horizontal
+      panes:
+        - txn001:
+            - ssh txn001.transifex.production "find /var/log -name '*.log' | xargs tail -f"
+        - txn002:
+            - ssh txn002.transifex.production "find /var/log -name '*.log' | xargs tail -f"
+        - txn003:
+            - ssh txn003.transifex.production "find /var/log -name '*.log' | xargs tail -f"

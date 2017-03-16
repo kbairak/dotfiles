@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+if [ $# -eq 1 ]
+then
+    FEATURE_VAR=$1
+else
+    FEATURE_VAR=`git rev-parse --abbrev-ref --symbolic-full-name HEAD`
+fi
+
+if [ $# -eq 2 ]
+then
+    DEVEL_VAR=$2
+else
+    DEVEL_VAR="devel"
+fi
+
+echo "git checkout $DEVEL_VAR && git pull --ff-only && git checkout $FEATURE_VAR && git reset --hard origin/$FEATURE_VAR && git rebase $DEVEL_VAR && git push -f"
+read -p "Press [Enter] key to run this command, [Ctrl-C] to abort..."
+
+(
+    git checkout $DEVEL_VAR &&\
+    git pull --ff-only &&\
+    git checkout $FEATURE_VAR &&\
+    git reset --hard origin/$FEATURE_VAR &&\
+    git rebase $DEVEL_VAR && git push -f
+) && say "Rebased and force-pushed"
