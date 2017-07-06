@@ -35,3 +35,9 @@ augroup json_tab
     autocmd FileType json set softtabstop=2
     autocmd FileType json set tabstop=2
 augroup end
+
+augroup yaml_tab
+    autocmd FileType yaml set shiftwidth=2
+    autocmd FileType yaml set softtabstop=2
+    autocmd FileType yaml set tabstop=2
+augroup end

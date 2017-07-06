@@ -26,7 +26,6 @@ root: ~/devel/repos/transifex/txc
 
 # Runs after everything. Use it to attach to tmux with custom options etc.
 # post: tmux -CC attach -t txc
-post: tmux set-option status off
 
 windows:
   - main:
@@ -43,6 +42,7 @@ windows:
             - workon tx
             - mg shell_plus
         - nvim:
+            - cd ..
             - nvim
   - daemons:
       layout: 95a3,364x82,0,0{185x82,0,0[185x41,0,0,1,185x40,0,42,5],178x82,186,0[178x41,186,0,6,178x40,186,42,8]}
@@ -50,13 +50,14 @@ windows:
         - openvpn:
             - sudo /usr/local/Cellar/openvpn/2.3.6/sbin/openvpn --config /etc/openvpn/tx-rs.ovpn
         - live-proxy:
+            - devpi-server --start
             - cd ~/devel/repos/transifex/transifex-live-proxy
             - node server.js
         - txriver:
             - workon hermes
             - cd ~/devel/repos/transifex/txriver
             - python txriver
-        - pglog:
-            - cd /usr/local/var/postgres/pg_log
-            - ls -t | head -1 | xargs tail -f
+        - context:
+            - cd ~/devel/repos/transifex/context
+            - npm start
   - glances: glances

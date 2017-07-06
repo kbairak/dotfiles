@@ -78,7 +78,6 @@ alias pse="pgrep -lf"
 alias txc='tmuxinator start txc'
 alias mg="python manage.py"
 alias hl="hg glog --template '{rev} ({author|email}): {desc}\n' -l"
-alias hr='vim .hg/hgrc'
 alias hm='hg extdiff -p meld'
 alias hgid='hg log -r `hg id -n`'
 alias txmigrate="mg syncdb --noinput && mg migrate"
@@ -89,11 +88,10 @@ alias whee="git pull --ff-only && git push && echo wheeeeeeeeeee!!! && say 'push
 alias ff="git pull --ff-only"
 alias grbd="git rebase devel"
 alias reset_to_remote="git reset --hard \`git rev-parse --abbrev-ref --symbolic-full-name @{u}\`"
+alias difffiles="hh git diff --name-only HEAD \`git merge-base HEAD devel\` | cat"
 alias devel="git checkout devel"
 alias startvpn="sudo /usr/local/Cellar/openvpn/2.3.6/sbin/openvpn --config /etc/openvpn/openvpn.conf"
-#alias txvim='tmux -S /home/kbairak/.sshtmuxvim new-session "chmod 777 /home/kbairak/.sshtmuxvim; tmux set-option -g mode-keys vi; tmux set-option prefix C-a; tmux set-option status off; workon tx; cd /home/kbairak/devel/repos/transifex/txc; vim"'
-alias vim='/Applications/MacVim.app/Contents/MacOS/Vim'
-alias txvim='tmux new-session -s txvim "tmux set-option -g mode-keys vi; tmux set-option prefix C-a; tmux set-option status off; workon tx; cd /Users/kbairak/devel/repos/transifex/txc; /Applications/MacVim.app/Contents/MacOS/Vim"'
+alias vim=nvim
 alias docker_rm_exited="docker ps -f status=exited | tail -n +2 | awk '{print \$1}' | xargs docker rm"
 alias dcompose=docker-compose
 
@@ -126,7 +124,7 @@ export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 #export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel'
 
-PATH='/Users/kbairak/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin'
+PATH='/Users/kbairak/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Frameworks/Mono.framework/Versions/Current/bin/'
 
 # Arch - pkgfile
 #source /usr/share/doc/pkgfile/command-not-found.zsh
