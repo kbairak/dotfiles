@@ -4,8 +4,6 @@ scriptencoding utf-8
 iabbrev *args, *args, **kwargs
 iabbrev blank=True, blank=True, null=True
 iabbrev null=True, null=True, blank=True
-iabbrev ipdb from ipdb import set_trace; set_trace()
-iabbrev pudb import pudb; pu.db
 
 " Navigate quickfix/location lists
 nnoremap <C-K> :cprevious<CR>
@@ -39,13 +37,17 @@ nnoremap <Leader>& yypvf{r wdW.............kEEEEEEElEEEEEEElDjgqq
 nnoremap <Leader>* yypvf{r wdW...............kEEEEEEEElEEEEEEEElDjgqq
 nnoremap <Leader>( yypvf{r wdW.................kEEEEEEEEElEEEEEEEEElDjgqq
 
+" Limit string to 79 chars
+nnoremap <Leader>" 0f"i(<Esc>f";a)<Esc>079lBi""<Esc>yypvf(r wdf"kf"lD
+
 nnoremap <Leader><Leader> :w<CR>
 nnoremap <Leader>= <C-w>=
 nnoremap <leader>/ :nohlsearch<CR>
+nnoremap <Leader>a ggVGy<C-o><C-o>
 nnoremap <Leader>c :lwindow<CR>
 nnoremap <Leader>C :cwindow<CR>
-nnoremap <Leader>d odebugger;<Esc>
-nnoremap <Leader>D Odebugger;<Esc>
+" nnoremap <Leader>d odebugger;<Esc>
+" nnoremap <Leader>D Odebugger;<Esc>
 nnoremap <Leader>e :e<CR>
 nnoremap <Leader>E :e!<CR>
 nnoremap <Leader>g :only \| Gstatus<CR>
@@ -58,12 +60,16 @@ nnoremap <Leader>p oimport pudb; pu.db<Esc>
 nnoremap <Leader>P Oimport pudb; pu.db<Esc>
 nnoremap <Leader>q :wq<CR>
 nnoremap <Leader>Q :q!<CR>
+nnoremap <Leader>r Pldebye
+nnoremap <Leader>R PldEbyE
 nnoremap <Leader>s :vsplit<CR>
 nnoremap <Leader>S :vnew<CR>
 nnoremap <Leader>t :tabe%<CR>
 nnoremap <Leader>T :tabnew<CR>
 nnoremap <Leader>v :split<CR>
 nnoremap <Leader>V :new<CR>
+nnoremap <Leader>y byePa=<Esc>e<Esc>
+nnoremap <Leader>Y byePa: <Esc>F:i'<Esc>bi'<Esc>f:e
 
 nnoremap <Leader>k <C-w>k
 nnoremap <Leader>j <C-w>j

@@ -17,4 +17,4 @@ else
     return 1
 fi
 
-git meld `git merge-base $head_var $devel_var` $head_var
+git diff --name-only `git merge-base $head_var $devel_var` $head_var | cat

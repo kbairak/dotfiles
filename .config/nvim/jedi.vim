@@ -1,0 +1,10 @@
+let g:jedi#use_splits_not_buffers = 'right'
+let g:jedi#goto_command = '<Leader>d'
+let g:jedi#goto_assignments_command = ''
+let g:jedi#goto_definitions_command = ''
+let g:jedi#documentation_command = ''
+let g:jedi#usages_command = ''
+let g:jedi#completions_command = ''
+let g:jedi#rename_command = ''
+
+let g:SuperTabDefaultCompletionType = '<c-n>'

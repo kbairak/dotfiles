@@ -33,6 +33,7 @@ plugins=(
     autojump
     brew
     catimg
+    celery
     colored-man
     colorize
     command-not-found
@@ -42,9 +43,13 @@ plugins=(
     extract
     git
     history-substring-search
+    httpie
     mercurial
     npm
+    osx
+    pass
     pip
+    pyenv
     python
     thefuck
     tmuxinator
@@ -90,8 +95,8 @@ alias grbd="git rebase devel"
 alias reset_to_remote="git reset --hard \`git rev-parse --abbrev-ref --symbolic-full-name @{u}\`"
 alias difffiles="hh git diff --name-only HEAD \`git merge-base HEAD devel\` | cat"
 alias devel="git checkout devel"
+alias force="git push --force-with-lease"
 alias startvpn="sudo /usr/local/Cellar/openvpn/2.3.6/sbin/openvpn --config /etc/openvpn/openvpn.conf"
-alias vim=nvim
 alias docker_rm_exited="docker ps -f status=exited | tail -n +2 | awk '{print \$1}' | xargs docker rm"
 alias dcompose=docker-compose
 
@@ -104,6 +109,7 @@ alias hge='sed -i {s/^#\ hggit/hggit/g} ~/.hgrc'
 alias hgd='sed -i {s/^hggit/#\ hggit/g} ~/.hgrc'
 
 alias kbcode='ssh -t kbairak@10.9.11.49 /usr/local/bin/tmux a -ttxc'
+alias httx='http --session=kb_admin'
 
 # update some keybindings
 bindkey "^R" history-incremental-search-backward
@@ -114,7 +120,10 @@ bindkey "^U" fuck-command-line
 
 # cmds for workon - virtualenv
 export WORKON_HOME="$HOME/devel/env"
-source /usr/local/bin/virtualenvwrapper.sh
+export PYENV_VIRTUALENVWRAPPER_PREFER_PYVENV="true"
+pyenv virtualenvwrapper
+export PYTHON_BUILD_CACHE_PATH=~/.pyenv/cache
+# source /usr/local/opt/pyenv/shims/virtualenvwrapper.sh
 
 export CDPATH="~/devel/repos"
 export EDITOR="nvim"
@@ -124,7 +133,7 @@ export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 #export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel'
 
-PATH='/Users/kbairak/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Frameworks/Mono.framework/Versions/Current/bin/'
+PATH=$PATH:/Users/kbairak/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Frameworks/Mono.framework/Versions/Current/bin/
 
 # Arch - pkgfile
 #source /usr/share/doc/pkgfile/command-not-found.zsh
@@ -147,12 +156,14 @@ then
 set --
 fi
 
-PATH="/Users/kbairak/perl5/bin${PATH:+:${PATH}}"; export PATH;
-PERL5LIB="/Users/kbairak/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
-PERL_LOCAL_LIB_ROOT="/Users/kbairak/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
-PERL_MB_OPT="--install_base \"/Users/kbairak/perl5\""; export PERL_MB_OPT;
-PERL_MM_OPT="INSTALL_BASE=/Users/kbairak/perl5"; export PERL_MM_OPT;
+# PATH="/Users/kbairak/perl5/bin${PATH:+:${PATH}}"; export PATH;
+# PERL5LIB="/Users/kbairak/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
+# PERL_LOCAL_LIB_ROOT="/Users/kbairak/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
+# PERL_MB_OPT="--install_base \"/Users/kbairak/perl5\""; export PERL_MB_OPT;
+# PERL_MM_OPT="INSTALL_BASE=/Users/kbairak/perl5"; export PERL_MM_OPT;
 
-export GITHUB_TOKEN=8545186badfa63e0b43490abf189fa4f37b2ba80
+export GITHUB_TOKEN=e545186badfa63e0b43490abf189fa4f37b2ba80
+
+export NODE_PATH='/usr/local/lib/node_modules'
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

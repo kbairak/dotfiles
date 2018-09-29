@@ -2,7 +2,7 @@
 let g:EasyMotion_leader_key = '<Leader>'
 
 " Gundo
-command! Gundo GundoToggle
+" command! Gundo GundoToggle
 
 " ColumnTags
 let g:columntags_max_columns = 4
@@ -20,7 +20,10 @@ let g:esearch['use'] = ['visual', 'hlsearch', 'word_under_cursor', 'last']
 let g:esearch['case'] = 1
 
 " Javscript syntax
-let g:used_javascript_libs = 'jquery,underscore,backbone,react'
+" let g:used_javascript_libs = 'jquery,underscore,backbone,react'
 
 " vim-table-mode
-let g:table_mode_corner='|'
+" let g:table_mode_corner='|'
+
+" TurboMark
+let g:TurboMarkSearchOnOpen = 1

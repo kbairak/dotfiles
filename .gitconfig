@@ -1,6 +1,7 @@
 [user]
 	name = Konstantinos Bairaktaris
 	email = kbairak@transifex.com
+    signinkey = D051365FF68E4255
 [alias]
     lol = log --graph --decorate --pretty=oneline --abbrev-commit --topo-order
 [push]
@@ -24,3 +25,5 @@
 	tool = diffmerge
 [difftool "diffmerge"]
 	cmd = diffmerge \"$LOCAL\" \"$REMOTE\"
+[commit]
+    gpgsign = true

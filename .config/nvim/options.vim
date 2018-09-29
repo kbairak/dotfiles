@@ -26,3 +26,6 @@ set timeoutlen=1000
 set ttimeoutlen=0
 
 set showcmd
+
+" let g:python_host_prog  = '/usr/bin/python2.7'
+" let g:python3_host_prog = '/usr/local/bin/python3'

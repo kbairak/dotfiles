@@ -33,11 +33,12 @@ windows:
       #layout: dc77,364x82,0,0{105x82,0,0[105x19,0,0,0,105x19,0,20,7,105x42,0,40,3],258x82,106,0,4}
       panes:
         - zsh:
-            - workon tx
-            - hh git branch
+            - workon txapi
+            - cd ../txapi
+            - hh mg runserver 8003
         - runserver:
             - workon tx
-            - hh mg runserver 0.0.0.0:8000
+            - hh mg runserver 8002
         - shell:
             - workon tx
             - mg shell_plus
@@ -60,4 +61,6 @@ windows:
         - context:
             - cd ~/devel/repos/transifex/context
             - npm start
-  - glances: glances
+  - glances:
+      - cd ..
+      - glances

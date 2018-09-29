@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+for i in `seq 0 7`; do
+    ssh fe1$i.transifex.com "cat /srv/transifex.com/transifex/logs/* | grep -i '$1'" | sort -n > /tmp/logs_from_fe1$i &
+done
+wait
+
+sort --merge -n /tmp/logs_from_fe1* > /tmp/merged_logs
+rm /tmp/logs_from_fe1*
+
+cat /tmp/merged_logs
+rm /tmp/merged_logs
