@@ -3,22 +3,30 @@ scriptencoding utf-8
 let g:fzf_command_prefix = 'FZF'
 nnoremap <C-p> :FZFFiles<cr>
 nnoremap <C-l> :FZFBTags<cr>
-" option-:
+" alt-;
 nnoremap … :FZFHistory:<cr>
-" option-p
+nnoremap <M-;> :FZFHistory:<cr>
+" alt-p
 nnoremap π :FZFBuffers<cr>
-" option-/
+nnoremap <M-p> :FZFBuffers<cr>
+" alt-/
 nnoremap ÷ :FZFHistory/<cr>
-" option-h
+nnoremap <M-/> :FZFHistory/<cr>
+" alt-h
 nnoremap ˙ :FZFHistory<cr>
-" option-t
+nnoremap <M-h> :FZFHistory<cr>
+" alt-t
 nnoremap † :FZFTags<cr>
-" option-l
+nnoremap <M-t> :FZFTags<cr>
+" alt-l
 nnoremap ¬ :FZFBLines<cr>
-" option-g
+nnoremap <M-l> :FZFBLines<cr>
+" alt-g
 nnoremap © :FZFHelptags<cr>
-" option-a
-nnoremap å :FZFAg<cr>
-" option -c
+nnoremap <M-g> :FZFHelptags<cr>
+" alt -c
 nnoremap ç :FZFBCommits<cr>
+nnoremap <M-c> :FZFBCommits<cr>
+
+nnoremap <M-a> :FZFRg<cr>
 " Remaining interesting FZF command: FZFLines

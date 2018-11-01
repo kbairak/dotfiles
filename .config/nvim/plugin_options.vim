@@ -8,7 +8,7 @@ let g:EasyMotion_leader_key = '<Leader>'
 let g:columntags_max_columns = 4
 
 " Neoterm
-nmap T :T<space>
+" nmap T :T<space>
 
 " ESearch
 if ! exists('g:esearch')

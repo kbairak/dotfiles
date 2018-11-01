@@ -8,9 +8,11 @@ iabbrev null=True, null=True, blank=True
 " Navigate quickfix/location lists
 nnoremap <C-K> :cprevious<CR>
 nnoremap <C-J> :cnext<CR>
-" option-k / option-l
+" alt-k / alt-l
 nnoremap ˚ :lprevious<CR>
+nnoremap <M-k> :lprevious<CR>
 nnoremap ∆ :lnext<CR>
+nnoremap <M-j> :lnext<CR>
 
 " Common operations mapped to leader
 let g:mapleader = "\<Space>"
@@ -43,7 +45,7 @@ nnoremap <Leader>" 0f"i(<Esc>f";a)<Esc>079lBi""<Esc>yypvf(r wdf"kf"lD
 nnoremap <Leader><Leader> :w<CR>
 nnoremap <Leader>= <C-w>=
 nnoremap <leader>/ :nohlsearch<CR>
-nnoremap <Leader>a ggVGy<C-o><C-o>
+nnoremap <Leader>a ggVGyVG"+y<C-o><C-o>
 nnoremap <Leader>c :lwindow<CR>
 nnoremap <Leader>C :cwindow<CR>
 " nnoremap <Leader>d odebugger;<Esc>

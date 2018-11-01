@@ -1,72 +1,121 @@
-# Path to your oh-my-zsh configuration.
-ZSH=$HOME/.oh-my-zsh
+# If you come from bash you might have to change your $PATH.
+# export PATH=$HOME/bin:/usr/local/bin:$PATH
 
-# Set name of the theme to load.
-# Look in ~/.oh-my-zsh/themes/
-# Optionally, if you set this to "random", it'll load a random theme each
-# time that oh-my-zsh is loaded.
+# Path to your oh-my-zsh installation.
+  export ZSH="/home/kbairak/.oh-my-zsh"
+
+# Set name of the theme to load --- if set to "random", it will
+# load a random theme each time oh-my-zsh is loaded, in which case,
+# to know which specific one was loaded, run: echo $RANDOM_THEME
+# See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 ZSH_THEME="robbyrussell"
 
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
+# Set list of themes to pick from when loading at random
+# Setting this variable when ZSH_THEME=random will cause zsh to load
+# a theme from this variable instead of looking in ~/.oh-my-zsh/themes/
+# If set to an empty array, this variable will have no effect.
+# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
 
-# Set to this to use case-sensitive completion
+# Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
 
-# Comment this out to disable weekly auto-update checks
+# Uncomment the following line to use hyphen-insensitive completion.
+# Case-sensitive completion must be off. _ and - will be interchangeable.
+# HYPHEN_INSENSITIVE="true"
+
+# Uncomment the following line to disable bi-weekly auto-update checks.
 # DISABLE_AUTO_UPDATE="true"
 
-# Uncomment following line if you want to disable colors in ls
+# Uncomment the following line to change how often to auto-update (in days).
+# export UPDATE_ZSH_DAYS=13
+
+# Uncomment the following line to disable colors in ls.
 # DISABLE_LS_COLORS="true"
 
-# Uncomment following line if you want to disable autosetting terminal title.
+# Uncomment the following line to disable auto-setting terminal title.
 # DISABLE_AUTO_TITLE="true"
 
-# Uncomment following line if you want red dots to be displayed while waiting for completion
-# COMPLETION_WAITING_DOTS="true"
+# Uncomment the following line to enable command auto-correction.
+# ENABLE_CORRECTION="true"
 
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
+# Uncomment the following line to display red dots whilst waiting for completion.
+COMPLETION_WAITING_DOTS="true"
+
+# Uncomment the following line if you want to disable marking untracked files
+# under VCS as dirty. This makes repository status check for large repositories
+# much, much faster.
+# DISABLE_UNTRACKED_FILES_DIRTY="true"
+
+# Uncomment the following line if you want to change the command execution time
+# stamp shown in the history command output.
+# You can set one of the optional three formats:
+# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
+# or set a custom format using the strftime function format specifications,
+# see 'man strftime' for details.
+# HIST_STAMPS="mm/dd/yyyy"
+
+# Would you like to use another custom folder than $ZSH/custom?
+# ZSH_CUSTOM=/path/to/new-custom-folder
+
+# Which plugins would you like to load?
+# Standard plugins can be found in ~/.oh-my-zsh/plugins/*
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
+# Add wisely, as too many plugins slow down shell startup.
 plugins=(
+    archlinux
     autojump
-    brew
-    catimg
     celery
     colored-man
-    colorize
-    command-not-found
     django
     docker
     docker-compose
-    extract
     git
-    history-substring-search
     httpie
-    mercurial
     npm
-    osx
     pass
     pip
-    pyenv
     python
     thefuck
     tmuxinator
-    vagrant
     vi-mode
-    web-search
-    zsh-syntax-highlighting
+    virtualenvwrapper
 )
 
 source $ZSH/oh-my-zsh.sh
 
-# Customize to your needs...
-#bindkey -v
-
-# Options
 setopt HIST_EXPIRE_DUPS_FIRST HIST_IGNORE_ALL_DUPS HIST_FIND_NO_DUPS HIST_SAVE_NO_DUPS
 
+
+# User configuration
+
+# export MANPATH="/usr/local/man:$MANPATH"
+
+# You may need to manually set your language environment
+# export LANG=en_US.UTF-8
+
+# Preferred editor for local and remote sessions
+if [[ -n $SSH_CONNECTION ]]; then
+  export EDITOR='vim'
+else
+  export EDITOR='nvim'
+fi
+
+# Compilation flags
+export ARCHFLAGS="-arch x86_64"
+
+# ssh
+# export SSH_KEY_PATH="~/.ssh/rsa_id"
+
+# Set personal aliases, overriding those provided by oh-my-zsh libs,
+# plugins, and themes. Aliases can be placed here, though oh-my-zsh
+# users are encouraged to define aliases within the ZSH_CUSTOM folder.
+# For a full list of active aliases, run `alias`.
+#
+# Example aliases
+# alias zshconfig="mate ~/.zshrc"
+# alias ohmyzsh="mate ~/.oh-my-zsh"
+#
 function _hh {
     COLOR='\033[0;33m'
     NOCOLOR='\033[0;0m'
@@ -75,95 +124,36 @@ function _hh {
     echo $NOCOLOR
 }
 alias hh='_hh;'
-
 alias ll="ls -lh"
 alias cd..="cd .."
 alias pse="pgrep -lf"
-#alias maketags="ctags --exclude='**/transifex/htmlcov/**' --exclude='**/site_media/**' --exclude='**/migrations/**' --exclude='*min.js' --exclude='**/*live.js' --exclude='**/*stripe.js' --exclude='**/transifex/static/plugins/**' -o ~/devel/repos/transifex/txc/tags -R ~/devel/repos/transifex/txc ~/devel/env/tx/lib/python2.7/site-packages/django"
 alias txc='tmuxinator start txc'
 alias mg="python manage.py"
-alias hl="hg glog --template '{rev} ({author|email}): {desc}\n' -l"
-alias hm='hg extdiff -p meld'
-alias hgid='hg log -r `hg id -n`'
-alias txmigrate="mg syncdb --noinput && mg migrate"
-#alias txsetup="mg txcreatenoticetypes && mg txlanguages && mg check_permissions"
 alias scpresume="rsync --compress --partial --progress --recursive --rsh=ssh"
 alias txtest="REUSE_DB=1 TX_ALL_TESTS=1 NOSE_NOCAPTURE=1 coverage run ./manage.py test"
-alias whee="git pull --ff-only && git push && echo wheeeeeeeeeee!!! && say 'push successful'" || say 'push failed'
+alias whee="git pull --ff-only && git push && echo wheeeeeeeeeee!!!"
 alias ff="git pull --ff-only"
 alias grbd="git rebase devel"
 alias reset_to_remote="git reset --hard \`git rev-parse --abbrev-ref --symbolic-full-name @{u}\`"
-alias difffiles="hh git diff --name-only HEAD \`git merge-base HEAD devel\` | cat"
 alias devel="git checkout devel"
 alias force="git push --force-with-lease"
-alias startvpn="sudo /usr/local/Cellar/openvpn/2.3.6/sbin/openvpn --config /etc/openvpn/openvpn.conf"
-alias docker_rm_exited="docker ps -f status=exited | tail -n +2 | awk '{print \$1}' | xargs docker rm"
 alias dcompose=docker-compose
+alias kill_orphans='yaourt --query --unrequired --deps'
+alias world='yaourt --query --explicit'
 
-alias dbjobs='echo "select pid, usename, backend_start, waiting, state, query from pg_catalog.pg_stat_activity;" | ./manage.py dbshell'
-function dbkill {
-    echo "select pg_cancel_backend($1)" | ./manage.py dbshell
-}
-
-alias hge='sed -i {s/^#\ hggit/hggit/g} ~/.hgrc'
-alias hgd='sed -i {s/^hggit/#\ hggit/g} ~/.hgrc'
-
-alias kbcode='ssh -t kbairak@10.9.11.49 /usr/local/bin/tmux a -ttxc'
-alias httx='http --session=kb_admin'
-
-# update some keybindings
-bindkey "^R" history-incremental-search-backward
 bindkey "^P" up-line-or-history
 bindkey "^N" down-line-or-history
 bindkey "^A" beginning-of-line
 bindkey "^U" fuck-command-line
 
-# cmds for workon - virtualenv
-export WORKON_HOME="$HOME/devel/env"
-export PYENV_VIRTUALENVWRAPPER_PREFER_PYVENV="true"
-pyenv virtualenvwrapper
-export PYTHON_BUILD_CACHE_PATH=~/.pyenv/cache
-# source /usr/local/opt/pyenv/shims/virtualenvwrapper.sh
+export WORKON_HOME=~/devel/env
+source /usr/bin/virtualenvwrapper.sh
 
-export CDPATH="~/devel/repos"
-export EDITOR="nvim"
-export HISTSIZE=100000
+export PAGER="vimpager"
 export PYTHONDONTWRITEBYTECODE=1
-export LC_ALL=en_US.UTF-8
-export LANG=en_US.UTF-8
-#export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel'
 
-PATH=$PATH:/Users/kbairak/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Frameworks/Mono.framework/Versions/Current/bin/
+PATH=$PATH:/home/kbairak/bin:/home/kbairak/.local/bin
 
-# Arch - pkgfile
-#source /usr/share/doc/pkgfile/command-not-found.zsh
-
-man() {
-    env \
-        LESS_TERMCAP_mb=$(printf "\e[1;31m") \
-        LESS_TERMCAP_md=$(printf "\e[1;31m") \
-        LESS_TERMCAP_me=$(printf "\e[0m") \
-        LESS_TERMCAP_se=$(printf "\e[0m") \
-        LESS_TERMCAP_so=$(printf "\e[1;44;33m") \
-        LESS_TERMCAP_ue=$(printf "\e[0m") \
-        LESS_TERMCAP_us=$(printf "\e[1;32m") \
-            man "$@"
-}
-
-if [[ $1 == eval ]]
-then
-    "$@"
-set --
-fi
-
-# PATH="/Users/kbairak/perl5/bin${PATH:+:${PATH}}"; export PATH;
-# PERL5LIB="/Users/kbairak/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
-# PERL_LOCAL_LIB_ROOT="/Users/kbairak/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
-# PERL_MB_OPT="--install_base \"/Users/kbairak/perl5\""; export PERL_MB_OPT;
-# PERL_MM_OPT="INSTALL_BASE=/Users/kbairak/perl5"; export PERL_MM_OPT;
-
-export GITHUB_TOKEN=e545186badfa63e0b43490abf189fa4f37b2ba80
-
-export NODE_PATH='/usr/local/lib/node_modules'
+source ~/.zshrc_secret
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

@@ -18,7 +18,7 @@ set foldignore=
 set foldmethod=indent
 
 set backspace=2
-set clipboard=unnamed
+set clipboard=unnamedplus
 set formatoptions+=n
 set incsearch
 set mouse=a
