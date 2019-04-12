@@ -48,8 +48,8 @@ nnoremap <leader>/ :nohlsearch<CR>
 nnoremap <Leader>a ggVGyVG"+y<C-o><C-o>
 nnoremap <Leader>c :lwindow<CR>
 nnoremap <Leader>C :cwindow<CR>
-" nnoremap <Leader>d odebugger;<Esc>
-" nnoremap <Leader>D Odebugger;<Esc>
+nnoremap <Leader>d odebugger;<Esc>
+nnoremap <Leader>D Odebugger;<Esc>
 nnoremap <Leader>e :e<CR>
 nnoremap <Leader>E :e!<CR>
 nnoremap <Leader>g :only \| Gstatus<CR>

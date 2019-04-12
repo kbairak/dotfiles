@@ -17,10 +17,8 @@ fi
 echo "git checkout $DEVEL_VAR && git pull --ff-only && git checkout $FEATURE_VAR && git reset --hard origin/$FEATURE_VAR && git rebase $DEVEL_VAR && git push --force-with-lease"
 read -p "Press [Enter] key to run this command, [Ctrl-C] to abort..."
 
-(
-    git checkout $DEVEL_VAR &&\
+git checkout $DEVEL_VAR &&\
     git pull --ff-only &&\
     git checkout $FEATURE_VAR &&\
     git reset --hard origin/$FEATURE_VAR &&\
     git rebase $DEVEL_VAR && git push --force-with-lease
-) && say "Rebased and force-pushed"

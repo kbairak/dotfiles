@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+if [ -n "$(nmcli connection show --active | grep 'Transifex VPN')" ]; then
+    VPN_IS_UP=true
+fi
+
+if [ "$1" = '-s' -o "$1" = '--status' ]; then
+    if [ "$VPN_IS_UP" = "true" ]; then
+        echo VPN is up
+    else
+        echo VPN is down
+    fi
+    exit 0
+fi
+
+if [ "$1" = '-u' -o "$1" = '--up' ]; then
+    ACTION_IS_UP=true
+fi
+
+if [ "$1" = '-d' -o "$1" = '--down' ]; then
+    ACTION_IS_DOWN=true
+fi
+
+if [ "$VPN_IS_UP" = "true" -a "$ACTION_IS_UP" != "true" ]; then
+    nmcli connection down Transifex\ VPN\ \(vpn-rs\)
+fi
+
+if [ "$VPN_IS_UP" != "true" -a "$ACTION_IS_DOWN" != "true" ]; then
+    nmcli connection up Transifex\ VPN\ \(vpn-rs\)
+fi

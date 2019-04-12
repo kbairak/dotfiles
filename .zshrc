@@ -65,13 +65,14 @@ COMPLETION_WAITING_DOTS="true"
 plugins=(
     archlinux
     autojump
+    colored-man-pages
     celery
-    colored-man
     django
     docker
     docker-compose
     git
     httpie
+    kubectl
     npm
     pass
     pip
@@ -124,7 +125,6 @@ function _hh {
     echo $NOCOLOR
 }
 alias hh='_hh;'
-alias ll="ls -lh"
 alias cd..="cd .."
 alias pse="pgrep -lf"
 alias txc='tmuxinator start txc'
@@ -140,6 +140,9 @@ alias force="git push --force-with-lease"
 alias dcompose=docker-compose
 alias kill_orphans='yaourt --query --unrequired --deps'
 alias world='yaourt --query --explicit'
+alias cat=bat
+alias ls=lsd
+alias ll="ls -l"
 
 bindkey "^P" up-line-or-history
 bindkey "^N" down-line-or-history
@@ -152,8 +155,15 @@ source /usr/bin/virtualenvwrapper.sh
 export PAGER="vimpager"
 export PYTHONDONTWRITEBYTECODE=1
 
-PATH=$PATH:/home/kbairak/bin:/home/kbairak/.local/bin
+# Node/npm
+export NPM_PACKAGES=/home/kbairak/global_npm
+export NODE_PATH=/home/kbairak/global_npm/lib/node_modules:$NODE_PATH
+export MANPATH=/home/kbairak/global_npm/share/man:$(manpath)
+
+PATH=$PATH:/home/kbairak/bin:/home/kbairak/.local/bin:/home/kbairak/global_npm/bin
 
 source ~/.zshrc_secret
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
