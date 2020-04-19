@@ -1,11 +1,74 @@
 #!/usr/bin/env bash
 
-if [ -n "$(nmcli connection show --active | grep 'Transifex VPN')" ]; then
-    VPN_IS_UP=true
+argparse(){
+    argparser=$(mktemp 2>/dev/null || mktemp -t argparser)
+    cat > "$argparser" <<EOF
+from __future__ import print_function
+import sys
+import argparse
+import os
+
+
+class MyArgumentParser(argparse.ArgumentParser):
+    def print_help(self, file=None):
+        """Print help and exit with error"""
+        super(MyArgumentParser, self).print_help(file=file)
+        sys.exit(1)
+
+parser = MyArgumentParser(prog=os.path.basename("$0"),
+            description="""$ARGPARSE_DESCRIPTION""")
+EOF
+
+    # stdin to this function should contain the parser definition
+    cat >> "$argparser"
+
+    cat >> "$argparser" <<EOF
+args = parser.parse_args()
+for arg in [a for a in dir(args) if not a.startswith('_')]:
+    key = arg.upper()
+    value = getattr(args, arg, None)
+
+    if isinstance(value, bool) or value is None:
+        print('{0}="{1}";'.format(key, 'yes' if value else ''))
+    elif isinstance(value, list):
+        print('{0}=({1});'.format(key, ' '.join('"{0}"'.format(s) for s in value)))
+    else:
+        print('{0}="{1}";'.format(key, value))
+EOF
+
+    # Define variables corresponding to the options if the args can be
+    # parsed without errors; otherwise, print the text of the error
+    # message.
+    if python "$argparser" "$@" &> /dev/null; then
+        eval $(python "$argparser" "$@")
+        retval=0
+    else
+        python "$argparser" "$@"
+        retval=1
+    fi
+
+    rm "$argparser"
+    return $retval
+}
+
+ARGPARSE_DESCRIPTION="Control the VPN, toggle when no arguments present"
+argparse "$@" <<EOF || exit 1
+parser.add_argument('-s', '--status', action="store_true", default=False,
+                    help="Display whether the VPN is up or down")
+parser.add_argument('-u', '--up', action="store_true", default=False,
+                    help="Turn the VPN on")
+parser.add_argument('-d', '--down', action="store_true", default=False,
+                    help="Turn the VPN off")
+parser.add_argument('-n', '--name', default="Transifex",
+                    help="The name of the VPN connection to control, default: Transifex")
+EOF
+
+if [ -n "$(nmcli connection show --active | grep $NAME | grep vpn)" ]; then
+    VPN_IS_UP=yes
 fi
 
-if [ "$1" = '-s' -o "$1" = '--status' ]; then
-    if [ "$VPN_IS_UP" = "true" ]; then
+if [[ $STATUS ]]; then
+    if [[ $VPN_IS_UP ]]; then
         echo VPN is up
     else
         echo VPN is down
@@ -13,18 +76,14 @@ if [ "$1" = '-s' -o "$1" = '--status' ]; then
     exit 0
 fi
 
-if [ "$1" = '-u' -o "$1" = '--up' ]; then
-    ACTION_IS_UP=true
+if [[ $UP && $DOWN ]]; then
+    echo Use either up or down
+    exit 1
 fi
 
-if [ "$1" = '-d' -o "$1" = '--down' ]; then
-    ACTION_IS_DOWN=true
+if [[ $VPN_IS_UP && ! $UP ]]; then
+    nmcli connection down $NAME
 fi
-
-if [ "$VPN_IS_UP" = "true" -a "$ACTION_IS_UP" != "true" ]; then
-    nmcli connection down Transifex\ VPN\ \(vpn-rs\)
-fi
-
-if [ "$VPN_IS_UP" != "true" -a "$ACTION_IS_DOWN" != "true" ]; then
-    nmcli connection up Transifex\ VPN\ \(vpn-rs\)
+if [[ ! $VPN_IS_UP && ! $DOWN ]]; then
+    nmcli connection up $NAME
 fi

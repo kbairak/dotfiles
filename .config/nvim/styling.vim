@@ -6,3 +6,4 @@ set termguicolors
 colorscheme gruvbox
 set background=dark
 set cursorline
+highlight Normal guibg=NONE ctermbg=NONE

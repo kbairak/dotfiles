@@ -4,6 +4,7 @@
     signinkey = D051365FF68E4255
 [alias]
     lol = log --graph --decorate --pretty=oneline --abbrev-commit --topo-order
+    lg = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)'
 [push]
 	default = simple
 [color]
@@ -12,3 +13,6 @@
 	editor = nvim
 [commit]
     gpgsign = true
+[pager]
+    diff = diff-so-fancy | less --tabs=1,5 -RFX
+    show = diff-so-fancy | less --tabs=1,5 -RFX

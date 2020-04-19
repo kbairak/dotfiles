@@ -14,7 +14,13 @@ else
     DEVEL_VAR="devel"
 fi
 
-echo "git checkout $DEVEL_VAR && git pull --ff-only && git checkout $FEATURE_VAR && git reset --hard origin/$FEATURE_VAR && git rebase $DEVEL_VAR && git push --force-with-lease"
+echo Running commands:
+echo " - git checkout $DEVEL_VAR"
+echo " - git pull --ff-only"
+echo " - git checkout $FEATURE_VAR"
+echo " - git reset --hard origin/$FEATURE_VAR"
+echo " - git rebase $DEVEL_VAR"
+echo " - git push --force-with-lease"
 read -p "Press [Enter] key to run this command, [Ctrl-C] to abort..."
 
 git checkout $DEVEL_VAR &&\

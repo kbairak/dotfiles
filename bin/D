@@ -1,0 +1,25 @@
+#!/bin/env sh
+
+docker_compose_command=$@
+
+if [ -z "$docker_compose_command" ]; then
+    echo No command supplied
+    exit 1
+fi
+
+if [ "$docker_compose_command" = "logs" ]; then
+    docker_compose_command='logs -f --tail=40'
+elif [ "$docker_compose_command" = "up" ]; then
+    docker_compose_command='up -d'
+fi
+
+services=$(docker-compose config | yq -r '.services|keys[]' | sort | fzf -m --cycle --height=15)
+success=$?
+
+if [[ "$success" != "0" ]]; then
+    echo fzf failed, exiting
+    exit $?
+fi
+
+read -p "([Enter] / [Ctrl-C]) Running: docker-compose $docker_compose_command $services"
+docker-compose $docker_compose_command $services

@@ -39,7 +39,7 @@ ZSH_THEME="robbyrussell"
 # ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
-COMPLETION_WAITING_DOTS="true"
+# COMPLETION_WAITING_DOTS="true"
 
 # Uncomment the following line if you want to disable marking untracked files
 # under VCS as dirty. This makes repository status check for large repositories
@@ -63,30 +63,13 @@ COMPLETION_WAITING_DOTS="true"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-    archlinux
-    autojump
-    colored-man-pages
-    celery
-    django
-    docker
-    docker-compose
-    git
-    httpie
-    kubectl
-    npm
-    pass
-    pip
-    python
-    thefuck
-    tmuxinator
-    vi-mode
-    virtualenvwrapper
+    archlinux autojump colored-man-pages django docker docker-compose git
+    httpie kubectl npm pip python thefuck vi-mode virtualenvwrapper ripgrep
 )
 
 source $ZSH/oh-my-zsh.sh
 
 setopt HIST_EXPIRE_DUPS_FIRST HIST_IGNORE_ALL_DUPS HIST_FIND_NO_DUPS HIST_SAVE_NO_DUPS
-
 
 # User configuration
 
@@ -105,9 +88,6 @@ fi
 # Compilation flags
 export ARCHFLAGS="-arch x86_64"
 
-# ssh
-# export SSH_KEY_PATH="~/.ssh/rsa_id"
-
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
@@ -125,24 +105,31 @@ function _hh {
     echo $NOCOLOR
 }
 alias hh='_hh;'
+
+alias backup='rsync -av -i --progress --ignore-existing'
 alias cd..="cd .."
-alias pse="pgrep -lf"
-alias txc='tmuxinator start txc'
+alias kill_orphans="yay -R \$(yay --query --unrequired --deps | awk '{print \$1}')"
+alias ls=lsd
+alias ll="ls -l"
 alias mg="python manage.py"
+alias pse="pgrep -ilf"
 alias scpresume="rsync --compress --partial --progress --recursive --rsh=ssh"
-alias txtest="REUSE_DB=1 TX_ALL_TESTS=1 NOSE_NOCAPTURE=1 coverage run ./manage.py test"
-alias whee="git pull --ff-only && git push && echo wheeeeeeeeeee!!!"
+alias world='yay --query --explicit'
+alias txsql="pgcli -h 127.0.0.1 -U transifex -d txc"
+alias dd=lazydocker
+alias xxcape="xcape -d -e 'Caps_Lock=Escape;Shift_R=backslash'" 
+
+# Docker
+alias d=docker-compose
+alias dcompose=docker-compose
+alias dls="docker-compose config | yq -r '.services|keys[]' | sort"
+
+# Git
+alias devel="git checkout devel"
 alias ff="git pull --ff-only"
 alias grbd="git rebase devel"
 alias reset_to_remote="git reset --hard \`git rev-parse --abbrev-ref --symbolic-full-name @{u}\`"
-alias devel="git checkout devel"
-alias force="git push --force-with-lease"
-alias dcompose=docker-compose
-alias kill_orphans='yaourt --query --unrequired --deps'
-alias world='yaourt --query --explicit'
-alias cat=bat
-alias ls=lsd
-alias ll="ls -l"
+alias whee="git pull --ff-only && git push && echo wheeeeeeeeeee!!!"
 
 bindkey "^P" up-line-or-history
 bindkey "^N" down-line-or-history
@@ -152,18 +139,27 @@ bindkey "^U" fuck-command-line
 export WORKON_HOME=~/devel/env
 source /usr/bin/virtualenvwrapper.sh
 
-export PAGER="vimpager"
 export PYTHONDONTWRITEBYTECODE=1
 
 # Node/npm
 export NPM_PACKAGES=/home/kbairak/global_npm
 export NODE_PATH=/home/kbairak/global_npm/lib/node_modules:$NODE_PATH
 export MANPATH=/home/kbairak/global_npm/share/man:$(manpath)
+export npm_config_prefix=~/global_npm
 
-PATH=$PATH:/home/kbairak/bin:/home/kbairak/.local/bin:/home/kbairak/global_npm/bin
+# Tensorflow
+# alias tensorflow='docker run --rm tensorflow/tensorflow:latest-gpu-py3-jupyter python'
+alias tensorflow='docker run -it --rm -p 8888:8888 -v $PWD:/tmp -w /tmp kbairak/tensorflow'
+alias tensorflow_gpu='docker run -it --rm -p 8888:8888 -v $PWD:/tmp -w /tmp --runtime=nvidia kbairak/tensorflow'
+export TENSORFLOW='tensorflow/tensorflow:latest-gpu-py3-jupyter'
+
 
 source ~/.zshrc_secret
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+eval "$(direnv hook zsh)"
+
+export PATH=$PATH:/home/kbairak/bin:/home/kbairak/.local/bin:/home/kbairak/global_npm/bin:$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$HOME/go/bin
+
+source /home/kbairak/.config/broot/launcher/bash/br

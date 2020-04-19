@@ -1,0 +1,19 @@
+#!/bin/env sh
+
+git_command=$@
+
+if [ -z "$git_command" ]; then
+    echo No command supplied
+    exit 1
+fi
+
+branch=$(git branch | awk "{print \$NF}" | fzf --cycle --height=15)
+success=$?
+
+if [[ "$success" != "0" ]]; then
+    echo fzf failed, exiting
+    exit $?
+fi
+
+read -p "([Enter] / [Ctrl-C]) Running: git $git_command $branch"
+git $git_command $branch
