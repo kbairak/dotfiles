@@ -1,0 +1,10 @@
+theme: gruvbox
+use_host_environment: true
+pager_json: jless
+animation: full
+focus:
+  on_startup: collection
+  on_response: body
+  on_request_open: url
+command_palette:
+  theme_preview: true
