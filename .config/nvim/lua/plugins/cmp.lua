@@ -1,24 +1,18 @@
--- return {
---   {
---     "saghen/blink.cmp",
---     dependencies = { "moyiz/blink-emoji.nvim" },
---     opts = function(_, opts)
---       table.insert(opts.sources.default, "emoji")
---       -- opts.providers.emoji = {
---       --   module = "blink-emoji",
---       --   name = "Emoji",
---       --   score_offset = 15, -- Tune by preference
---       --   opts = { insert = true }, -- Insert emoji (default) or complete its name
---       -- }
---       opts.providers = {
---         emoji = {
---           module = "blink-emoji",
---           name = "Emoji",
---           score_offset = 15, -- Tune by preference
---           opts = { insert = true }, -- Insert emoji (default) or complete its name
---         },
---       }
---     end,
---   },
--- }
-return {}
+return {
+  {
+    "saghen/blink.cmp",
+    dependencies = { "moyiz/blink-emoji.nvim" },
+    opts = function(_, opts)
+      table.insert(opts.sources.default, "emoji")
+      -- if opts..providers == nil then
+      --   opts.providers = {}
+      -- end
+      opts.sources.providers.emoji = {
+        module = "blink-emoji",
+        name = "Emoji",
+        score_offset = 15, -- Tune by preference
+        opts = { insert = true }, -- Insert emoji (default) or complete its name
+      }
+    end,
+  },
+}
