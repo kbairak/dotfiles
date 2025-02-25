@@ -8,6 +8,8 @@ vim.keymap.del("n", "<M-j>")
 vim.keymap.del("n", "<M-k>")
 vim.keymap.del("i", "<M-j>")
 vim.keymap.del("i", "<M-k>")
+vim.keymap.del("v", "<M-j>")
+vim.keymap.del("v", "<M-k>")
 
 vim.keymap.set("i", "∆", "<Esc><Cmd>m .+1<CR>==gi")
 vim.keymap.set("n", "∆", "<Cmd>execute 'move .+' . v:count1<CR>==")

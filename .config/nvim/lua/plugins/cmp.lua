@@ -4,9 +4,6 @@ return {
     dependencies = { "moyiz/blink-emoji.nvim" },
     opts = function(_, opts)
       table.insert(opts.sources.default, "emoji")
-      -- if opts..providers == nil then
-      --   opts.providers = {}
-      -- end
       opts.sources.providers.emoji = {
         module = "blink-emoji",
         name = "Emoji",
