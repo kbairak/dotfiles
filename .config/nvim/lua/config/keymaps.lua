@@ -20,5 +20,6 @@ vim.keymap.set("v", "˚", ":<C-U>execute \"'<lt>,'>move '<lt>-\" . (v:count1 + 1
 
 vim.keymap.set("n", "<Leader>A", ":%yank<cr>")
 
-vim.keymap.set("n", "<Leader>r", "Pldebye")
+vim.keymap.set("n", "<Leader>R", "Pldebye")
+vim.keymap.set("n", "<Leader>Y", "byei'<Esc>ea': <Esc>pe")
 vim.keymap.set("n", "<Leader>y", "byePa=<Esc>e")
