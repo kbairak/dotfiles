@@ -6,4 +6,5 @@ vim.opt.foldlevel = 0
 vim.opt.relativenumber = false
 vim.opt.ignorecase = false
 vim.opt.wrap = false
+vim.opt.colorcolumn = "100"
 vim.g.snacks_animate = false

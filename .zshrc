@@ -70,6 +70,7 @@ alias dd=lazydocker
 alias gg=lazygit
 alias d='docker compose'
 alias ..='cd ..'
+alias ss='source .venv/bin/activate'
 
 # emacs-like keys
 bindkey "^P" up-line-or-history

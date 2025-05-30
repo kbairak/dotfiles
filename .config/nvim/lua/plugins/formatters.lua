@@ -4,8 +4,13 @@ return {
     opts = {
       ensure_installed = {
         "stylua",
+        "ruff",
         "black",
         "isort",
+        "prettierd",
+        "typescript-language-server",
+        "postgrestools",
+        "pgformatter",
       },
     },
   },
@@ -13,8 +18,9 @@ return {
     "stevearc/conform.nvim",
     opts = {
       formatters_by_ft = {
-        python = { "isort", "black" },
+        python = { "ruff_format", "ruff_fix" },
         json = { "jq" },
+        javascript = { "prettierd" },
       },
     },
   },
