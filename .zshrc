@@ -71,6 +71,7 @@ alias gg=lazygit
 alias d='docker compose'
 alias ..='cd ..'
 alias ss='source .venv/bin/activate'
+alias t='tree --depth'
 
 # emacs-like keys
 bindkey "^P" up-line-or-history
