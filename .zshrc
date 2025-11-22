@@ -46,7 +46,7 @@ source ~/.zsh_plugins/ohmyzsh/plugins/bgnotify/bgnotify.plugin.zsh
 [ -f /opt/homebrew/etc/profile.d/autojump.sh ] && . /opt/homebrew/etc/profile.d/autojump.sh
 
 # vi-mode
-# source ~/.zsh_plugins/zsh-vi-mode/zsh-vi-mode.plugin.zsh
+#source ~/.zsh_plugins/zsh-vi-mode/zsh-vi-mode.plugin.zsh
 
 # Fuck
 eval $(thefuck --alias)
@@ -55,11 +55,12 @@ eval $(thefuck --alias)
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # Various environment variables
-export ARCHFLAGS="-arch x86_64"
+export ARCHFLAGS="-arch arm64"
 export EDITOR=nvim
-export PATH=$HOME/bin:$PATH
+export PATH=$HOME/bin:$HOME/.local/bin:$PATH
 export PAGER='bat --paging=always'
 export PYTHONBREAKPOINT='pudb.set_trace'
+export CARGO_BUILD_TARGET=aarch64-apple-darwin
 
 # Aliases
 alias p=pymake
@@ -74,6 +75,7 @@ alias ss='source .venv/bin/activate'
 alias t='tree --depth'
 
 # emacs-like keys
+bindkey -v
 bindkey "^P" up-line-or-history
 bindkey "^N" down-line-or-history
 bindkey "^A" beginning-of-line

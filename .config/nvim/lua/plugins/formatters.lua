@@ -1,6 +1,6 @@
 return {
   {
-    "williamboman/mason.nvim",
+    "mason-org/mason.nvim",
     opts = {
       ensure_installed = {
         "stylua",
@@ -9,8 +9,6 @@ return {
         "isort",
         "prettierd",
         "typescript-language-server",
-        "postgrestools",
-        "pgformatter",
       },
     },
   },
@@ -21,6 +19,7 @@ return {
         python = { "ruff_format", "ruff_fix" },
         json = { "jq" },
         javascript = { "prettierd" },
+        -- sql = { "sqruff fix" },
       },
     },
   },
