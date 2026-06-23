@@ -6,3 +6,12 @@
 --
 -- Or remove existing autocmds by their group name (which is prefixed with `lazyvim_` for the defaults)
 -- e.g. vim.api.nvim_del_augroup_by_name("lazyvim_wrap_spell")
+
+-- Set foldmethod to manual for neo-tree buffers
+vim.api.nvim_create_autocmd({ "BufWinEnter", "BufEnter" }, {
+  callback = function()
+    if vim.bo.filetype == "neo-tree" then
+      vim.wo.foldmethod = "manual"
+    end
+  end,
+})

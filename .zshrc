@@ -73,6 +73,8 @@ alias d='docker compose'
 alias ..='cd ..'
 alias ss='source .venv/bin/activate'
 alias t='tree --depth'
+alias pt='poetry run pytest --disable-warnings -vvv'
+alias mm='lazymake'
 
 # emacs-like keys
 bindkey -v
@@ -85,6 +87,7 @@ eval "$(direnv hook zsh)"
 eval "$(gh copilot alias -- zsh)"
 
 [ -f ~/.zshrc_plum ] && source ~/.zshrc_plum
+[ -f ~/.zshrc_private ] && source ~/.zshrc_private
 
 eval $(pymake --setup-zsh-completion)
 
@@ -92,3 +95,11 @@ eval $(pymake --setup-zsh-completion)
 export FZF_DEFAULT_COMMAND='fd --type f --hidden'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 source <(fzf --zsh)
+# The following lines have been added by Docker Desktop to enable Docker CLI completions.
+fpath=(/Users/k.bairaktaris/.docker/completions $fpath)
+autoload -Uz compinit
+compinit
+# End of Docker CLI completions
+
+# opencode
+export PATH=/Users/k.bairaktaris/.opencode/bin:$PATH

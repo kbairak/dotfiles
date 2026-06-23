@@ -7,5 +7,5 @@ return {
     vim.keymap.set("n", "<Leader>bi", ":BufferNotebook inject<CR>")
     vim.keymap.set("n", "<Leader>bc", ":BufferNotebook copy<CR>")
   end,
-  dir = "/Users/k.bairaktaris/code/prog/buffernotebook.nvim",
+  dir = "/Users/k.bairaktaris/code/pet_projects/neovim_plugins/buffernotebook.nvim",
 }

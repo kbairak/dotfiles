@@ -20,7 +20,7 @@ vim.keymap.set("v", "˚", ":<C-U>execute \"'<lt>,'>move '<lt>-\" . (v:count1 + 1
 
 vim.keymap.set("n", "<Leader>A", ":%yank<cr>")
 
-vim.keymap.set("n", "<Leader>R", "Pldebye")
+vim.keymap.set("n", "<Leader>R", '"_diwPb')
 vim.keymap.set("n", "<Leader>Y", "byei'<Esc>ea': <Esc>pe")
 vim.keymap.set("n", "<Leader>y", "byePa=<Esc>e")
 vim.keymap.set("n", "<Leader>'", "i<CR><Esc>ddpkkJxJx")
@@ -104,7 +104,8 @@ local function toggle_rightmost_terminal()
 end
 
 vim.keymap.set({ "n", "i", "v", "t" }, "<C-/>", toggle_rightmost_terminal, { silent = true })
-vim.keymap.set({ "n", "i", "v", "t" }, "<C-\\>", "<C-\\><C-n>", { silent = true })
+vim.keymap.set("t", "<C-\\>", "<C-\\><C-n>", { silent = true })
+vim.keymap.set({ "t", "i" }, "<C-h>", "<C-\\><C-n><C-w>h", { silent = true })
 
 -- Navigate to next/previous file in directory
 local function get_files_in_dir(dir)
@@ -174,3 +175,84 @@ end, { desc = "Next file in directory" })
 vim.keymap.set("n", "<Leader>[", function()
   navigate_sibling_file("prev")
 end, { desc = "Previous file in directory" })
+
+-- Open todos in floating window using Snacks
+vim.keymap.set("n", "<Leader>.", function()
+  Snacks.win({
+    file = vim.fn.expand("~/Documents/bigfatplan.md"),
+    width = 0.6,
+    height = 0.8,
+    border = "rounded",
+    title = " Big Fat Plan ",
+    title_pos = "center",
+    bo = {
+      modifiable = true,
+      readonly = false,
+    },
+    on_close = function(self)
+      -- Save and delete the buffer to avoid swap file conflicts
+      local buf = self.buf
+      vim.cmd("silent! write")
+      vim.schedule(function()
+        if buf and vim.api.nvim_buf_is_valid(buf) then
+          vim.api.nvim_buf_delete(buf, { force = true })
+        end
+      end)
+    end,
+    footer_keys = true,
+  })
+end, { desc = "Open todos in floating window" })
+
+-- Open lazydocker in floating terminal
+vim.keymap.set("n", "<Leader>dd", function()
+  Snacks.terminal("lazydocker", {
+    win = {
+      width = 0.9,
+      height = 0.9,
+      border = "rounded",
+      title = " LazyDocker ",
+      title_pos = "center",
+    },
+  })
+end, { desc = "LazyDocker" })
+
+-- Open lazymake in floating terminal
+vim.keymap.set("n", "<Leader>mm", function()
+  local current_file = vim.api.nvim_buf_get_name(0)
+  local target_dir = nil
+
+  if current_file ~= "" then
+    local search_dir = vim.fn.fnamemodify(current_file, ":h")
+
+    -- Search upward for Makefile
+    while search_dir ~= "/" and search_dir ~= "" do
+      if vim.fn.filereadable(search_dir .. "/Makefile") == 1 then
+        target_dir = search_dir
+        break
+      end
+
+      local parent = vim.fn.fnamemodify(search_dir, ":h")
+      -- Stop if we can't go up anymore
+      if parent == search_dir then
+        break
+      end
+      search_dir = parent
+    end
+  end
+
+  -- Fallback to PWD
+  if not target_dir then
+    target_dir = vim.fn.getcwd()
+  end
+
+  -- Run lazymake in the determined directory
+  Snacks.terminal("cd " .. vim.fn.shellescape(target_dir) .. " && lazymake", {
+    win = {
+      width = 0.9,
+      height = 0.9,
+      border = "rounded",
+      title = " LazyMake ",
+      title_pos = "center",
+    },
+  })
+end, { desc = "LazyMake" })
